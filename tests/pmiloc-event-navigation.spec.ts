@@ -37,17 +37,17 @@ test.describe('PMI Lakeshore Event Navigation Tests', () => {
     try {
       logger.info('🎭 Starting Event Navigation Test');
 
-      // Launch browser with visible mode
-      logger.step('Launching browser in visible mode');
+      // Launch browser with CI-compatible settings
+      logger.step('Launching browser for event navigation');
       browser = await chromium.launch({
-        headless: false,
-        slowMo: 1000, // Slow down actions for visibility
-        args: ['--start-maximized']
+        headless: process.env.CI ? true : false,
+        slowMo: process.env.CI ? 0 : 1000,
+        args: process.env.CI ? [] : ['--start-maximized']
       });
 
       context = await browser.newContext({
-        viewport: null, // Use full screen
-        recordVideo: {
+        viewport: { width: 1920, height: 1080 },
+        recordVideo: process.env.CI ? undefined : {
           dir: 'test-results/videos/',
           size: { width: 1920, height: 1080 }
         }
@@ -167,18 +167,33 @@ test.describe('PMI Lakeshore Event Navigation Tests', () => {
       throw error;
 
     } finally {
-      // Step 13: Close browser
+      // Step 13: Enhanced browser cleanup
+      try {
+        if (page && !page.isClosed()) {
+          logger.step('Closing page');
+          await page.close();
+        }
+      } catch (pageError) {
+        logger.warning('Failed to close page', pageError);
+      }
+
       try {
         if (context) {
           logger.step('Closing browser context');
           await context.close();
         }
-        if (browser) {
+      } catch (contextError) {
+        logger.warning('Failed to close context', contextError);
+      }
+
+      try {
+        if (browser && browser.isConnected()) {
+          logger.step('Closing browser');
           await browser.close();
           logger.success('Browser closed successfully');
         }
-      } catch (closeError) {
-        logger.error('Error closing browser', closeError);
+      } catch (browserError) {
+        logger.warning('Failed to close browser', browserError);
       }
 
       // Final logging
@@ -200,11 +215,13 @@ test.describe('PMI Lakeshore Event Navigation Tests', () => {
       logger.info('🎭 Starting No Registration Event Test');
 
       browser = await chromium.launch({
-        headless: false,
-        slowMo: 500
+        headless: process.env.CI ? true : false,
+        slowMo: process.env.CI ? 0 : 500
       });
 
-      context = await browser.newContext({ viewport: null });
+      context = await browser.newContext({
+        viewport: { width: 1920, height: 1080 }
+      });
       page = await context.newPage();
 
       const homePage = new HomePage(page, logger);
@@ -232,9 +249,31 @@ test.describe('PMI Lakeshore Event Navigation Tests', () => {
       logger.error('Test failed', error);
       throw error;
     } finally {
-      if (context) await context.close();
-      if (browser) await browser.close();
-      logger.success('Browser closed');
+      // Enhanced cleanup for no registration test
+      try {
+        if (page && !page.isClosed()) {
+          await page.close();
+        }
+      } catch (pageError) {
+        logger.warning('Failed to close no-reg test page', pageError);
+      }
+
+      try {
+        if (context) {
+          await context.close();
+        }
+      } catch (contextError) {
+        logger.warning('Failed to close no-reg test context', contextError);
+      }
+
+      try {
+        if (browser && browser.isConnected()) {
+          await browser.close();
+          logger.success('No-registration test browser closed');
+        }
+      } catch (browserError) {
+        logger.warning('Failed to close no-reg test browser', browserError);
+      }
     }
   });
 });
