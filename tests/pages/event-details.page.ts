@@ -32,9 +32,9 @@ export class EventDetailsPage extends BasePage {
 
     // Event information
     this.eventTitle = page.locator('h1, h2, .event-title, .title').first();
-    this.eventDate = page.locator('text=/.*\\d{1,2}, \\d{4}.*/, .date, .event-date').first();
-    this.eventTime = page.locator('text=/.*\\d{1,2}:\\d{2}.*/, .time, .event-time').first();
-    this.eventLocation = page.locator('.location, .venue, text=/Virtual/, text=/Online/, text=/EDT/, text=/EST/').first();
+    this.eventDate = page.locator('.date, .event-date').first().or(page.locator('text=/.*\\d{1,2}, \\d{4}.*/').first());
+    this.eventTime = page.locator('.time, .event-time').first().or(page.locator('text=/.*\\d{1,2}:\\d{2}.*/').first());
+    this.eventLocation = page.locator('.location, .venue').first().or(page.locator('text=/Virtual|Online|EDT|EST/').first());
     this.eventDescription = page.locator('.description, .event-description, p').first();
 
     // Action buttons - multiple possible selectors
