@@ -1,0 +1,98 @@
+name: Webhook Triggered Tests
+
+on:
+  repository_dispatch:
+    types: [manual-trigger, webhook-test]
+
+jobs:
+  webhook-info:
+    runs-on: ubuntu-latest
+    outputs:
+      test-suite: ${{ steps.parse.outputs.test-suite }}
+      browser: ${{ steps.parse.outputs.browser }}
+      environment: ${{ steps.parse.outputs.environment }}
+    steps:
+    - name: Parse webhook payload
+      id: parse
+      run: |
+        echo "test-suite=${{ github.event.client_payload.test_suite || 'all' }}" >> $GITHUB_OUTPUT
+        echo "browser=${{ github.event.client_payload.browser || 'chromium' }}" >> $GITHUB_OUTPUT
+        echo "environment=${{ github.event.client_payload.environment || 'production' }}" >> $GITHUB_OUTPUT
+        echo "Webhook triggered with payload:"
+        echo "${{ toJson(github.event.client_payload) }}"
+
+  test:
+    needs: webhook-info
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: ${{ fromJson(format('["{0}"]', needs.webhook-info.outputs.browser)) }}
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps ${{ matrix.browser }}
+
+    - name: Run specific test suite
+      if: needs.webhook-info.outputs.test-suite != 'all'
+      run: npx playwright test --project=${{ matrix.browser }} --grep "${{ needs.webhook-info.outputs.test-suite }}"
+      env:
+        CI: true
+        BASE_URL: ${{ vars.BASE_URL || 'https://pmiloc.org' }}
+        ENVIRONMENT: ${{ needs.webhook-info.outputs.environment }}
+
+    - name: Run all tests
+      if: needs.webhook-info.outputs.test-suite == 'all'
+      run: npx playwright test --project=${{ matrix.browser }}
+      env:
+        CI: true
+        BASE_URL: ${{ vars.BASE_URL || 'https://pmiloc.org' }}
+        ENVIRONMENT: ${{ needs.webhook-info.outputs.environment }}
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: webhook-test-results-${{ matrix.browser }}-${{ github.run_number }}
+        path: |
+          test-results/
+          playwright-report/
+        retention-days: 7
+
+    - name: Create test summary
+      if: always()
+      run: |
+        echo "## Webhook Test Results 🎭" >> $GITHUB_STEP_SUMMARY
+        echo "- **Triggered by**: ${{ github.event.sender.login || 'API' }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Test Suite**: ${{ needs.webhook-info.outputs.test-suite }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Browser**: ${{ matrix.browser }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Environment**: ${{ needs.webhook-info.outputs.environment }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+
+  notify:
+    needs: [webhook-info, test]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+    - name: Send webhook notification
+      if: vars.WEBHOOK_NOTIFICATION_URL
+      run: |
+        curl -X POST "${{ vars.WEBHOOK_NOTIFICATION_URL }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "status": "${{ needs.test.result }}",
+            "test_suite": "${{ needs.webhook-info.outputs.test-suite }}",
+            "browser": "${{ needs.webhook-info.outputs.browser }}",
+            "environment": "${{ needs.webhook-info.outputs.environment }}",
+            "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }'
