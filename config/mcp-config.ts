@@ -1,3 +1,8 @@
+import * as dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
+
 export interface MCPConfig {
   server: {
     name: string;
@@ -38,12 +43,12 @@ export const defaultMCPConfig: MCPConfig = {
     },
   },
   timeouts: {
-    navigation: 60000, // Max 60 seconds for navigation
-    action: 60000,     // Max 60 seconds for actions
-    assertion: 60000,  // Max 60 seconds for assertions
+    navigation: parseInt(process.env.BROWSER_TIMEOUT) || 60000, // Max 60 seconds for navigation
+    action: parseInt(process.env.BROWSER_TIMEOUT) || 60000,     // Max 60 seconds for actions
+    assertion: parseInt(process.env.BROWSER_TIMEOUT) || 60000,  // Max 60 seconds for assertions
   },
   retries: {
-    max: 3,
+    max: parseInt(process.env.MAX_RETRIES) || 3,
     delay: 1000,
   },
 };

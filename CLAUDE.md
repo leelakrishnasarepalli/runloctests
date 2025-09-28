@@ -70,9 +70,24 @@ npm run report:custom       # Open PMI-branded custom report
 - **Cost Optimization**: Single browser matrix, efficient resource usage
 
 ### Environment Variables
+
+Copy `.env.example` to `.env` and configure your local settings:
+
+```bash
+cp .env.example .env
+```
+
+**Available Environment Variables:**
 - `BASE_URL`: Target website (defaults to https://pmiloc.org)
 - `CI`: Enables headless mode and CI optimizations
 - `HEADLESS`: Forces headless mode regardless of CI setting
+- `BROWSER_TIMEOUT`: Timeout for all browser operations (default: 60000ms)
+- `SLOW_MOTION_DELAY`: Delay between actions in headed mode (default: 500ms)
+- `MAX_RETRIES`: Number of retries for failed tests (default: 2)
+- `PARALLEL_WORKERS`: Number of parallel test workers (default: 1)
+- `SCREENSHOT_ON_FAILURE`: Take screenshots on test failure (default: true)
+- `VIDEO_ON_FAILURE`: Record video on test failure (default: true)
+- `DEBUG_MODE`: Enable debug mode (default: false)
 - `WEBHOOK_NOTIFICATION_URL`: Optional result notification endpoint
 
 ## Security Guidelines

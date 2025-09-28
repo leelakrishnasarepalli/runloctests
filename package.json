@@ -26,6 +26,9 @@
     "typescript": "^5.0.0",
     "ts-node": "^10.9.0"
   },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
   "engines": {
     "node": ">=18.0.0"
   }
