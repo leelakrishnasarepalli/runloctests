@@ -75,6 +75,14 @@ npm run report:custom       # Open PMI-branded custom report
 - `HEADLESS`: Forces headless mode regardless of CI setting
 - `WEBHOOK_NOTIFICATION_URL`: Optional result notification endpoint
 
+## Security Guidelines
+
+### Important Security Practices
+- **Never commit API keys, tokens, or secrets** to the repository
+- Use environment variables for sensitive configuration (`.env` files in `.gitignore`)
+- Be cautious with GitHub API keys, webhook URLs, and authentication tokens
+- Review commits before pushing to ensure no sensitive data is included
+
 ## Development Notes
 
 ### Browser Configuration
