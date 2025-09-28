@@ -1,8 +1,19 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('PMI Lakeshore Chapter Homepage Tests', () => {
-  test.beforeEach(async ({ page }) => {
+  // Use beforeAll to navigate once and reuse the browser
+  test.beforeAll(async ({ browser }) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
     await page.goto('/index.php');
+    // Store context for reuse - but we'll handle this in individual tests
+  });
+
+  test.beforeEach(async ({ page }) => {
+    // Only navigate if not already on the homepage
+    if (!page.url().includes('index.php')) {
+      await page.goto('/index.php');
+    }
   });
 
   test('should load homepage and verify title', async ({ page }) => {

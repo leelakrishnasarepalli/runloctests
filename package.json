@@ -17,17 +17,23 @@
     "report:custom": "open test-results/pmiloc-test-report.html || start test-results/pmiloc-test-report.html",
     "install:browsers": "playwright install"
   },
-  "keywords": ["playwright", "mcp", "automation", "testing", "github-actions"],
+  "keywords": [
+    "playwright",
+    "mcp",
+    "automation",
+    "testing",
+    "github-actions"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@playwright/test": "^1.40.0",
     "@types/node": "^20.0.0",
-    "typescript": "^5.0.0",
-    "ts-node": "^10.9.0"
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
   },
   "dependencies": {
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.6.1"
   },
   "engines": {
     "node": ">=18.0.0"
