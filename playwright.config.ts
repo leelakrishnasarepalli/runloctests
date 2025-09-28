@@ -6,7 +6,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1, // Allow retries for flaky tests
   workers: process.env.CI ? 1 : 1, // Single worker for visible mode
-  timeout: 120000, // 2 minutes per test
+  timeout: 60000, // 1 minute per test (max 60 seconds for web operations)
   globalTimeout: 600000, // 10 minutes total
   reporter: [
     ['./tests/utils/custom-reporter.ts'], // Custom PMI reporter first

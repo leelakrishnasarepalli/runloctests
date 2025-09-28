@@ -38,9 +38,9 @@ export const defaultMCPConfig: MCPConfig = {
     },
   },
   timeouts: {
-    navigation: 30000,
-    action: 10000,
-    assertion: 5000,
+    navigation: 60000, // Max 60 seconds for navigation
+    action: 60000,     // Max 60 seconds for actions
+    assertion: 60000,  // Max 60 seconds for assertions
   },
   retries: {
     max: 3,

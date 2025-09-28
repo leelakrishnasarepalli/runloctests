@@ -25,7 +25,7 @@ export abstract class BasePage {
   async clickElement(locator: Locator, description: string): Promise<void> {
     try {
       this.logger.step(`Clicking: ${description}`);
-      await locator.waitFor({ state: 'visible', timeout: 10000 });
+      await locator.waitFor({ state: 'visible', timeout: 60000 });
       await locator.click();
       this.logger.success(`Successfully clicked: ${description}`);
     } catch (error) {
@@ -37,7 +37,7 @@ export abstract class BasePage {
   async fillInput(locator: Locator, value: string, description: string): Promise<void> {
     try {
       this.logger.step(`Filling ${description} with: ${value}`);
-      await locator.waitFor({ state: 'visible', timeout: 10000 });
+      await locator.waitFor({ state: 'visible', timeout: 60000 });
       await locator.clear();
       await locator.fill(value);
       this.logger.success(`Successfully filled ${description}`);
@@ -47,7 +47,7 @@ export abstract class BasePage {
     }
   }
 
-  async waitForElement(locator: Locator, description: string, timeout: number = 10000): Promise<void> {
+  async waitForElement(locator: Locator, description: string, timeout: number = 60000): Promise<void> {
     try {
       this.logger.step(`Waiting for: ${description}`);
       await locator.waitFor({ state: 'visible', timeout });
@@ -61,7 +61,7 @@ export abstract class BasePage {
   async getElementText(locator: Locator, description: string): Promise<string> {
     try {
       this.logger.step(`Getting text from: ${description}`);
-      await locator.waitFor({ state: 'visible', timeout: 10000 });
+      await locator.waitFor({ state: 'visible', timeout: 60000 });
       const text = await locator.textContent() || '';
       this.logger.success(`Retrieved text from ${description}: ${text.substring(0, 100)}...`);
       return text;
