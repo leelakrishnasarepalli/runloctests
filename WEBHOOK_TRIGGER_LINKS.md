@@ -24,7 +24,7 @@ curl -X POST \
     "event_type": "manual-trigger",
     "client_payload": {
       "test_suite": "event-navigation",
-      "browser": "chromium",
+      "browser": "pmiloc-chromium",
       "environment": "production"
     }
   }'
@@ -40,7 +40,7 @@ curl -X POST \
     "event_type": "manual-trigger",
     "client_payload": {
       "test_suite": "banner-navigation",
-      "browser": "chromium",
+      "browser": "pmiloc-chromium",
       "environment": "production"
     }
   }'
@@ -56,7 +56,7 @@ curl -X POST \
     "event_type": "manual-trigger",
     "client_payload": {
       "test_suite": "homepage",
-      "browser": "chromium",
+      "browser": "pmiloc-chromium",
       "environment": "production"
     }
   }'
@@ -72,7 +72,7 @@ curl -X POST \
     "event_type": "manual-trigger",
     "client_payload": {
       "test_suite": "navigation",
-      "browser": "chromium",
+      "browser": "pmiloc-chromium",
       "environment": "production"
     }
   }'
@@ -88,7 +88,7 @@ curl -X POST \
     "event_type": "manual-trigger",
     "client_payload": {
       "test_suite": "accessibility",
-      "browser": "chromium",
+      "browser": "pmiloc-chromium",
       "environment": "production"
     }
   }'
@@ -104,7 +104,7 @@ curl -X POST \
     "event_type": "manual-trigger",
     "client_payload": {
       "test_suite": "all",
-      "browser": "chromium",
+      "browser": "pmiloc-chromium",
       "environment": "production"
     }
   }'
@@ -301,7 +301,7 @@ curl -X POST \
     "event_type": "manual-trigger",
     "client_payload": {
       "test_suite": "homepage",
-      "browser": "chromium",
+      "browser": "pmiloc-chromium",
       "environment": "staging",
       "base_url": "https://staging.pmiloc.org"
     }

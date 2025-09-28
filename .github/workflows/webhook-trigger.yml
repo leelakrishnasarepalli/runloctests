@@ -16,7 +16,7 @@ jobs:
       id: parse
       run: |
         echo "test-suite=${{ github.event.client_payload.test_suite || 'all' }}" >> $GITHUB_OUTPUT
-        echo "browser=${{ github.event.client_payload.browser || 'chromium' }}" >> $GITHUB_OUTPUT
+        echo "browser=${{ github.event.client_payload.browser || 'pmiloc-chromium' }}" >> $GITHUB_OUTPUT
         echo "environment=${{ github.event.client_payload.environment || 'production' }}" >> $GITHUB_OUTPUT
         echo "Webhook triggered with payload:"
         echo "${{ toJson(github.event.client_payload) }}"
@@ -41,7 +41,7 @@ jobs:
       run: npm ci
 
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps ${{ matrix.browser }}
+      run: npx playwright install --with-deps chromium
 
     - name: Run specific test suite
       if: needs.webhook-info.outputs.test-suite != 'all'
