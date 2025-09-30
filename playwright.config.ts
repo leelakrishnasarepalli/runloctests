@@ -14,7 +14,7 @@ export default defineConfig({
   globalTimeout: 600000, // 10 minutes total
   reporter: [
     ['./tests/utils/custom-reporter.ts'], // Custom PMI reporter first
-    ['html', { outputFolder: 'test-results/html-report', open: 'never' }],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
     ['json', { outputFile: 'test-results/results.json' }],
     ['junit', { outputFile: 'test-results/results.xml' }],
     ['list'], // Console output
@@ -69,9 +69,5 @@ export default defineConfig({
     },
     */
   ],
-  webServer: process.env.START_SERVER ? {
-    command: 'npm run start',
-    port: 3000,
-    reuseExistingServer: !process.env.CI,
-  } : undefined,
+  // webServer removed - no start script available
 });

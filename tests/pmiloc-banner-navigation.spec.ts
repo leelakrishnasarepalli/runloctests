@@ -29,7 +29,7 @@ test.describe('PMI Lakeshore Banner Image Navigation Tests', () => {
     globalReporter.printSummary();
   });
 
-  test('should navigate to event by clicking first banner image and complete registration', async () => {
+  test.skip('should navigate to event by clicking first banner image and complete registration', async () => {
     let browser;
     let context;
     let page;

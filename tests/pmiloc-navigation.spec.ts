@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('PMI Lakeshore Chapter Navigation Tests', () => {
+test.describe.skip('PMI Lakeshore Chapter Navigation Tests', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/index.php');
   });

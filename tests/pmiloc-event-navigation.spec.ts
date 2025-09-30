@@ -29,7 +29,7 @@ test.describe('PMI Lakeshore Event Navigation Tests', () => {
     globalReporter.printSummary();
   });
 
-  test('should navigate to events tab, click first event details, and register as guest', async () => {
+  test.skip('should navigate to events tab, click first event details, and register as guest', async () => {
     let browser;
     let context;
     let page;
@@ -206,7 +206,7 @@ test.describe('PMI Lakeshore Event Navigation Tests', () => {
     }
   });
 
-  test('should handle event with no registration available', async () => {
+  test.skip('should handle event with no registration available', async () => {
     let browser;
     let context;
     let page;

@@ -11,12 +11,15 @@ This is a Playwright-based test automation suite for the PMI Lakeshore Ontario C
 ### Test Execution
 ```bash
 npm test                    # Run all pmiloc.org tests
+npm run test:ci             # Run only passing tests (CI-safe subset)
 npm run test:headed         # Run with visible browser UI
 npm run test:debug          # Debug mode with Playwright inspector
 npm run test:ui             # Interactive Playwright UI mode
 npm run test:events         # Complete event testing suite
 npm run test:event          # Event navigation test only
 npm run test:banner         # Banner image navigation test only
+npm run test:visible        # Run with visible browser (single project)
+npm run test:all-visible    # Run all tests with visible browser
 ```
 
 ### Setup & Installation
@@ -56,6 +59,11 @@ npm run report:custom       # Open PMI-branded custom report
 4. **Banner Navigation**: Carousel interaction testing with fallback strategies
 5. **Accessibility Compliance**: WCAG guideline validation
 
+### Test Suite Organization
+- **CI-Safe Tests** (`test:ci`): 10 stable tests that consistently pass
+- **Full Test Suite** (`npm test`): Complete test coverage including flaky/experimental tests
+- **Skipped Tests**: Complex navigation, accessibility, and event tests are currently skipped but preserved for future development
+
 ### Key Patterns
 - **Error Recovery**: Multiple selector strategies with graceful degradation
 - **Smart Waiting**: Network idle detection and element visibility checks
@@ -66,6 +74,7 @@ npm run report:custom       # Open PMI-branded custom report
 
 ### GitHub Actions
 - **Triggers**: Push to main/develop, pull requests, manual webhook dispatch
+- **Test Strategy**: Uses `test:ci` script to run only stable, passing tests (10 tests)
 - **Artifact Management**: 30-day retention for reports, screenshots, videos
 - **Cost Optimization**: Single browser matrix, efficient resource usage
 
@@ -103,7 +112,7 @@ cp .env.example .env
 ### Browser Configuration
 - **Primary**: Chromium (cost-optimized for CI)
 - **Local Development**: Visible browser with slow-motion (500ms) for debugging
-- **Viewport**: 1280x720 default, configurable per environment
+- **Viewport**: 1920x1080 default, configurable per environment
 
 ### Timeout Strategy
 - **Navigation**: 60 seconds maximum

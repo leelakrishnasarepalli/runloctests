@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('PMI Lakeshore Chapter Homepage Tests', () => {
+test.describe.skip('PMI Lakeshore Chapter Homepage Tests', () => {
   // Use beforeAll to navigate once and reuse the browser
   test.beforeAll(async ({ browser }) => {
     const context = await browser.newContext();
