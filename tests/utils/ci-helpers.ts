@@ -89,11 +89,12 @@ export async function smartElementFind(
         element = page.locator(selector);
       }
 
-      // Wait for element with shorter timeout per selector
-      await element.waitFor({ state: 'visible', timeout: timeout / selectors.length });
+      // For strict mode violations, use first() and then wait
+      const firstElement = element.first();
+      await firstElement.waitFor({ state: 'visible', timeout: timeout / selectors.length });
 
       console.log(`  ✅ Found ${description} with selector: ${selector}`);
-      return element.first();
+      return firstElement;
 
     } catch (error) {
       console.log(`  ⚠️ Selector "${selector}" failed: ${error.message}`);

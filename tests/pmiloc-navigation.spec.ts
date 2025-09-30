@@ -34,15 +34,19 @@ test.describe('PMI Lakeshore Chapter Navigation Tests', () => {
   test('should navigate to calendar page', async ({ page }) => {
     await safeTest('Calendar Navigation', async () => {
       const calendarSelectors = [
-        'role:link',
-        'a:has-text("Calendar")',
-        'a[href*="calendar"]',
+        'a[href*="calendar.php"]:visible',
+        'a:has-text("Calendar"):visible',
+        'a[href*="calendar"]:visible',
         'text:Calendar',
-        'a:has-text("Events")',
-        'a[href*="event"]'
+        'role:link'
       ];
 
       const calendarLink = await smartElementFind(page, calendarSelectors, 'calendar link', 20000);
+
+      // Get href before clicking to verify it's the right link
+      const href = await calendarLink.getAttribute('href');
+      console.log(`🔗 About to click calendar link: ${href}`);
+
       await calendarLink.click();
       await waitForPageReady(page);
 
