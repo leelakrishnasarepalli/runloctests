@@ -4,6 +4,7 @@ import { EventDetailsPage } from './pages/event-details.page';
 import { RegistrationPage } from './pages/registration.page';
 import { TestLogger } from './utils/logger';
 import { TestReporter } from './utils/reporter';
+import { robustPageLoad, smartElementFind, safeTest, waitForPageReady } from './utils/ci-helpers';
 
 // Global reporter instance
 const globalReporter = new TestReporter();
@@ -30,11 +31,6 @@ test.describe('PMI Lakeshore Event Navigation Tests', () => {
   });
 
   test('should navigate to events tab, click first event details, and register as guest', async () => {
-    // Skip in CI environment due to timeout issues with Cloudflare protection
-    if (process.env.CI) {
-      console.log('Skipping event navigation test in CI environment due to timeout issues');
-      return;
-    }
     let browser;
     let context;
     let page;

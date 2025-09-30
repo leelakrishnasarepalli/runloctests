@@ -4,6 +4,7 @@ import { EventDetailsPage } from './pages/event-details.page';
 import { RegistrationPage } from './pages/registration.page';
 import { TestLogger } from './utils/logger';
 import { TestReporter } from './utils/reporter';
+import { robustPageLoad, smartElementFind, safeTest, waitForPageReady } from './utils/ci-helpers';
 
 // Global reporter instance
 const globalReporter = new TestReporter();
@@ -30,11 +31,6 @@ test.describe('PMI Lakeshore Banner Image Navigation Tests', () => {
   });
 
   test('should navigate to event by clicking first banner image and complete registration', async () => {
-    // Skip in CI environment due to timeout issues with complex navigation
-    if (process.env.CI) {
-      console.log('Skipping banner navigation test in CI environment due to timeout and complexity issues');
-      return;
-    }
     let browser;
     let context;
     let page;
@@ -338,11 +334,6 @@ test.describe('PMI Lakeshore Banner Image Navigation Tests', () => {
   });
 
   test('should identify and catalog all clickable banner elements', async () => {
-    // Skip in CI environment due to timeout issues
-    if (process.env.CI) {
-      console.log('Skipping banner element discovery test in CI environment due to timeout issues');
-      return;
-    }
 
     let browser;
     let context;
