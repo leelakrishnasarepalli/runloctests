@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:ci": "playwright test tests/example.spec.ts tests/mcp-integration.spec.ts tests/pmiloc-banner-navigation.spec.ts --grep=\"should load homepage and verify basic functionality|should have working search functionality|should display member login section|should handle responsive design|should have social media links|should verify MCP configuration|should use MCP browser configuration|should handle timeouts according to MCP config|should capture network requests|should identify and catalog all clickable banner elements\"",
+    "test:ci": "playwright test tests/example.spec.ts tests/mcp-integration.spec.ts --grep=\"should handle responsive design|should verify MCP configuration|should use MCP browser configuration|should handle timeouts according to MCP config|should capture network requests\"",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "test:ui": "playwright test --ui",

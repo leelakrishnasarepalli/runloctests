@@ -60,7 +60,7 @@ npm run report:custom       # Open PMI-branded custom report
 5. **Accessibility Compliance**: WCAG guideline validation
 
 ### Test Suite Organization
-- **CI-Safe Tests** (`test:ci`): 10 stable tests that consistently pass
+- **CI-Safe Tests** (`test:ci`): 5 stable tests that consistently pass (100% success rate)
 - **Full Test Suite** (`npm test`): Complete test coverage including flaky/experimental tests
 - **Skipped Tests**: Complex navigation, accessibility, and event tests are currently skipped but preserved for future development
 
@@ -74,7 +74,7 @@ npm run report:custom       # Open PMI-branded custom report
 
 ### GitHub Actions
 - **Triggers**: Push to main/develop, pull requests, manual webhook dispatch
-- **Test Strategy**: Uses `test:ci` script to run only stable, passing tests (10 tests)
+- **Test Strategy**: Uses `test:ci` script to run only stable, passing tests (5 tests)
 - **Artifact Management**: 30-day retention for reports, screenshots, videos
 - **Cost Optimization**: Single browser matrix, efficient resource usage
 

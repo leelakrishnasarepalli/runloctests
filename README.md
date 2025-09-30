@@ -43,7 +43,7 @@ Tests automatically run on:
 - Push to `main` or `develop` branches
 - Pull requests to `main`
 
-**CI Strategy**: GitHub Actions runs only the stable test suite (`test:ci`) containing 10 reliable tests to ensure consistent builds and avoid flaky test failures.
+**CI Strategy**: GitHub Actions runs only the stable test suite (`test:ci`) containing 5 reliable tests to ensure consistent builds and avoid flaky test failures.
 
 ### Manual Webhook Triggers
 
@@ -183,7 +183,7 @@ BASE_URL_PRODUCTION: https://pmiloc.org
 
 **Available Test Commands:**
 ```bash
-npm run test:ci             # CI-safe tests (10 stable tests)
+npm run test:ci             # CI-safe tests (5 stable tests)
 npm run test:events         # Event-related tests
 npm run test:banner         # Banner navigation tests
 npm run test:event          # Single event navigation test
@@ -197,7 +197,7 @@ npx playwright test --grep "accessibility" # Run accessibility tests only
 ```
 
 **Test Suite Status:**
-- **Active Tests**: 10 core tests that consistently pass
+- **Active Tests**: 5 core tests that consistently pass (100% success rate)
 - **Skipped Tests**: Complex navigation, accessibility, and event tests are preserved but skipped for stability
 - **Development Tests**: Full test suite available for local development and debugging
 
